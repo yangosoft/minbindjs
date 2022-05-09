@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <script type="module">
+        import { MinBindingJS, Observable, Computable } from '../modules/minbindjs.mjs';
+
+        let app = new MinBindingJS();
+        app.bindings.first = new Observable("John");
+        app.bindings.last = new Observable("Doe");
+        app.bindings.full = new Computable(() =>
+            `${app.bindings.first.value} ${app.bindings.last.value}`.trim(),
+            [app.bindings.first, app.bindings.last]);
+
+
+        app.bindings.num1 = new Observable(0);
+        app.bindings.num2 = new Observable(0);
+
+        let sum = function () { return parseInt(app.bindings.num1.value) + parseInt(app.bindings.num2.value); };
+        app.bindings.sum = new Computable(sum, [app.bindings.num1, app.bindings.num2]);
+
+
+        app.run();
+
+    </script>
+</head>
+
+<body>
+
+
+    <div>
+        <h1>Data-Binding Example</h1>
+        <label for="firstName">
+            <div>First Name:</div><input type="text" data-bind="first" id="firstName" />
+        </label>
+        <label for="lastName">
+            <div>Last Name:</div><input type="text" data-bind="last" id="lastName" />
+        </label>
+        <label for="fullName">
+            <div>Full Name:</div><input type="text" data-bind="full" id="fullName" disabled />
+        </label>
+
+
+        <label for="num1">
+            <div>First number:</div><input type="number" data-bind="num1" id="num1" />
+        </label>
+        <label for="num2">
+            <div>Second number:</div><input type="number" data-bind="num2" id="num2" />
+        </label>
+        <label for="sum">
+            <div>Sum:</div><input type="number" data-bind="sum" id="sum" disabled />
+        </label>
+
+
+    </div>
+
+</body>
+
+</html>
