@@ -57,7 +57,7 @@ export class DataBinding {
      * @param {Observable} observable The observable instance to bind to 
      */
     bindValue(input, observable) {
-        console.log("bindValue()");
+        console.log("bindValue()", input, observable);
         const initialValue = observable.value;
         input.value = initialValue;
         observable.subscribe(() => input.value = observable.value);
@@ -92,11 +92,22 @@ export class DataBinding {
      */
     bindObservables(elem, context) {
         const dataBinding = elem.querySelectorAll("[data-bind]");
-        dataBinding.forEach(elem => {
-            this.bindValue(
-                /** @type {HTMLInputElement} */(elem),
-                context[elem.getAttribute("data-bind")]);
-        });
+        console.log(context);
+        if (undefined != context.bindings) {
+            console.log("------- EXIOSTS!");
+            console.log(context.bindings.val.text1);
+
+            dataBinding.forEach(elem => {
+                console.log("->", elem.getAttribute("data-bind"), context.bindings.val.text1);
+                this.bindValue(elem, context.bindings.val.text1);
+            });
+        } else {
+
+            dataBinding.forEach(elem => {
+                console.log("->", elem.getAttribute("data-bind"), context[elem.getAttribute("data-bind")]);
+                this.bindValue(elem, context[elem.getAttribute("data-bind")]);
+            });
+        }
     }
 
     /**
@@ -138,11 +149,10 @@ export class DataBinding {
             elem.removeAttribute("component");
             const template = elem.outerHTML;
 
-            try{
+            try {
                 parent.removeChild(elem);
-            }catch(e)
-            {
-                
+            } catch (e) {
+
             }
 
             let newTemplate = `${template}`;

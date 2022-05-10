@@ -1,23 +1,23 @@
-<div component="bindings">
+<div component>
     <div>
-        <p>This is a test</p>
+        <p>This is a test for component2.</p>
     
     
         <label for="text1">
             <div>Example:</div>
-            <input type="text" data-bind="value" id="text1" />
+            <input type="text" data-bind="bindings.val.text1" id="text1" />
         </label>
     
     
         <label for="text2">
             <div>Example:</div>
-            <input type="text" data-bind="value" id="text2" />
+            <input type="text" data-bind="bindings.val.text1" id="text2" />
         </label>
     </div>
 
-    <div a>
-        <p>{{bindings.text1}}</p>
-        <p>{{bindings.text2}}</p>
+    <div>
+        <p>{{bindings.val.text1.val}}</p>
+        <p>{{bindings.val.text2}}</p>
         <input type="text" value="{{bindings.text2}}" id="text3" />
     </div>
 
@@ -29,9 +29,13 @@
 
 <script>
     this.value = new Observable("Test string in another context");
-    this.bindings = {
-        text1: "Hello",
-        text2: "World"
-    };
+    
+    this.bindings2 = new Observable(['test','test2']);
+    
+    this.bindings = new Observable({
+        text1: new Observable("Hello"),
+        text2: "World",
+        myValue: "TEST OBS"
+    });
 
 </script>

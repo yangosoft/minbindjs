@@ -22,6 +22,7 @@ export class Component {
          * @type {object}
          */
         this._context = {};
+        console.log("Context", this._context);
         /**
          * Data binding helper
          * @type {DataBinding}
