@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <script type="module">
+        import { MinBindingJS, Observable, Computable } from '../modules/minbindjs.mjs';
+
+        let app = new MinBindingJS();
+
+        let cmp1 = await app.loadComponent('component1.html');
+        let cmp2 = await app.loadComponent('component2.html');
+
+        document.body.append(cmp1.html);
+
+        document.body.append(cmp2.html);
+
+
+
+    </script>
+</head>
+
+<body>
+
+
+    <div>
+        
+
+
+    </div>
+
+</body>
+
+</html>

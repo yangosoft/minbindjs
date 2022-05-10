@@ -1,0 +1,21 @@
+<div>
+    <div>
+        <p>This is a test</p>
+    
+    
+        <label for="text1">
+            <div>Example:</div>
+            <input type="text" data-bind="value" id="text1" />
+        </label>
+    
+    
+        <label for="text2">
+            <div>Example:</div>
+            <input type="text" data-bind="value" id="text2" />
+        </label>
+    </div>
+</div>
+
+<script>
+    this.value = new Observable("Test string in another context");
+</script>

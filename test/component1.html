@@ -1,0 +1,48 @@
+<h1>Data-Binding Example</h1>
+<div>
+    <p>This is a test</p>
+
+
+    <label for="text1">
+        <div>Example:</div>
+        <input type="text" data-bind="value" id="text1" />
+    </label>
+
+
+    <label for="text2">
+        <div>Example:</div>
+        <input type="text" data-bind="value" id="text2" />
+    </label>
+</div>
+
+<div>
+    <p>This a test for Computables</p>
+    <label for="num1">
+        <div>First number:</div><input type="number" data-bind="num1" id="num1" />
+    </label>
+    <label for="num2">
+        <div>Second number:</div><input type="number" data-bind="num2" id="num2" />
+    </label>
+    <label for="sum">
+        <div>Sum:</div><input type="number" data-bind="sum" id="sum" disabled />
+    </label>
+</div>
+
+<div>
+    <p>This is a test for a list</p>
+    <ul repeat="list">
+        <li>{{item}}</li>
+    </ul>
+</div>
+
+<script>
+    this.value = new Observable("Test string in this context");
+
+    this.list = ["a", "b", "c", "d"];
+
+    this.num1 = new Observable(0);
+    this.num2 = new Observable(0);
+    let that = this;
+    let sum_callback = function () { return parseInt(that.num1.value) + parseInt(that.num2.value); };
+    this.sum = new Computable(sum_callback, [that.num1, that.num2]);
+</script>

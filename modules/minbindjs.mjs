@@ -1,5 +1,8 @@
 import { Observable } from './observable.mjs';
 import { Computable } from './computable.mjs';
+import { Component } from './component.mjs';
+import { DataBinding } from './databinding.mjs';
+import * as loader from './cmploader.mjs';
 
 class MinBindingJS {
 
@@ -27,6 +30,11 @@ class MinBindingJS {
         this.applyBindings();
         console.log("Running");
     }
+
+    loadComponent(path)
+    {
+        return loader.loadComponent(path);
+    }
 }
 
-export { MinBindingJS, Observable, Computable };
+export { MinBindingJS, Observable, Computable, Component, DataBinding };
