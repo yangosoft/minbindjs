@@ -1,5 +1,6 @@
 //@ts-check
 import { Component } from "./component.mjs";
+import { addEntry, getEntry } from "./cache.mjs";
 
 /**
  * Load a single slide
@@ -7,9 +8,14 @@ import { Component } from "./component.mjs";
  * @returns {Promise<Component>} The slide 
  */
 async function loadComponent(slideName) {
+    let pageText = getEntry(slideName);
+    if (null != pageText)
+    {
+        return new Component(pageText);
+    }
     const response = await fetch(`./${slideName}`);
-    const slide = await response.text();
-    return new Component(slide);
+    pageText = await response.text();
+    return new Component(pageText);
 }
 
 /**
