@@ -1,4 +1,4 @@
-<div>
+<div component="bindings">
     <div>
         <p>This is a test</p>
     
@@ -14,8 +14,24 @@
             <input type="text" data-bind="value" id="text2" />
         </label>
     </div>
+
+    <div a>
+        <p>{{bindings.text1}}</p>
+        <p>{{bindings.text2}}</p>
+        <input type="text" value="{{bindings.text2}}" id="text3" />
+    </div>
+
+    
+    <div>
+        <p>Shall change: {{value.val}}</p>
+    </div>
 </div>
 
 <script>
     this.value = new Observable("Test string in another context");
+    this.bindings = {
+        text1: "Hello",
+        text2: "World"
+    };
+
 </script>

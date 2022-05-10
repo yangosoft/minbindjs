@@ -82,6 +82,7 @@ export class DataBinding {
     bindAll(elem, context) {
         this.bindLists(elem, context);
         this.bindObservables(elem, context);
+        this.bindComponents(elem, context);
     }
 
     /**
@@ -112,6 +113,7 @@ export class DataBinding {
             const template = elem.outerHTML;
             parent.removeChild(elem);
             context[expression].forEach(item => {
+                console.log("ITEM: " + item);
                 let newTemplate = `${template}`;
                 const matches = newTemplate.match(/\{\{([^\}]*?)\}\}/g);
                 if (matches) {
@@ -123,6 +125,39 @@ export class DataBinding {
                     parent.innerHTML += newTemplate;
                 }
             });
+        });
+    }
+
+    bindComponents(elem, context) {
+
+        const listBinding = elem.querySelectorAll("[component]");
+        listBinding.forEach(elem => {
+            const parent = elem.parentElement;
+            const expression = elem.getAttribute("component");
+            //console.log("expression = " + expression);
+            elem.removeAttribute("component");
+            const template = elem.outerHTML;
+
+            try{
+                parent.removeChild(elem);
+            }catch(e)
+            {
+                
+            }
+
+            let newTemplate = `${template}`;
+            const matches = newTemplate.match(/\{\{([^\}]*?)\}\}/g);
+            if (matches) {
+                matches.forEach(match => {
+                    match = match.replace("{{", "").replace("}}", "");
+                    //console.log("MATCH: " + match);
+                    //console.log("CONTEXT:" + JSON.stringify({ context }));
+                    const value = this.executeInContext(`this.context.${match}`, { context });
+                    newTemplate = newTemplate.replace(`{{${match}}}`, value);
+                });
+                parent.innerHTML += newTemplate;
+            }
+
         });
     }
 }
